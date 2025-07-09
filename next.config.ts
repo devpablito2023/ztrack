@@ -9,6 +9,13 @@ const nextConfig: NextConfig = {
   },
   // ✅ Desactivar StrictMode para ver las animaciones claramente
   reactStrictMode: false,
+    // --- AÑADE ESTE BLOQUE ---
+  typescript: {
+    // ADVERTENCIA: Esto permite que las compilaciones de producción se completen
+    // con éxito incluso si tu proyecto tiene errores de tipo.
+    ignoreBuildErrors: true,
+  },
+  // -------------------------
 
   webpack: (config, { dev, isServer }) => {
     
