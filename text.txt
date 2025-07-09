@@ -1,0 +1,224 @@
+echo "# CONTEXTO PROYECTO STANDAR - ZGROUP LinkControl - ACTUALIZADO JULIO 2025
+
+## INFORMACIÓN BÁSICA
+- Nombre: ZGROUP - LinkControl
+- Repositorio: github.com/JOGLDEVELOPER96/Standar
+- Tecnologías: Next.js 15, TypeScript, Tailwind CSS, Framer Motion, bcryptjs
+- Alias de importación: \$/* (NO @/*)
+- Arquitectura: Modular con máximo 200 líneas por archivo
+
+## APIS CONFIGURADAS
+- API Principal: http://161.132.206.104:9010
+- API Control: http://161.132.53.51:9050
+- Variables: NEXT_PUBLIC_API_URL, NEXT_PUBLIC_APICONTROL_URL
+
+## ESTRUCTURA DEL PROYECTO
+src/
+├── app/ (páginas: login, dashboard, control-automatico)
+├── components/ (layout, ui, dashboard, control-automatico, login)
+├── contexts/ (ThemeContext, SidebarContext, ToastContext)
+├── hooks/ (useAuth, useContainers, useControlAutomatico, useControlFormularios, useModals)
+├── lib/ (secure-storage)
+├── types/ (auth, container, navigation, control)
+└── config/ (navigation)
+
+## FUNCIONALIDADES COMPLETAMENTE IMPLEMENTADAS ✅
+### Sistema de Autenticación
+- Login seguro con bcrypt y validación de contraseñas hasheadas
+- Almacenamiento encriptado en sessionStorage
+- Redirección automática según estado de autenticación
+- Logout completo con limpieza de datos
+
+### Dashboard Funcional
+- Vista principal con estadísticas en tiempo real
+- Carrusel de contenedores con navegación fluida
+- Imagen interactiva con zoom (scroll) y pan (drag) ✅ CORREGIDO
+- Indicadores de estado (power, alarmas, procesos)
+- Auto-actualización cada 30 segundos
+- Responsive design completo
+
+### Sistema de Control Automático
+- Formularios completos: Único, Cíclico, Periódico ✅ IMPLEMENTADO
+- Validaciones robustas con confirmaciones modales
+- Estados de carga y manejo de errores
+- Tabla de controles activos e histórico
+- Hook personalizado useControlFormularios
+
+### Sistema de Notificaciones y Modales
+- Toast system completo (success, error, warning, info)
+- Modales de confirmación y guardado
+- Z-index hierarchy: Toasts (9999), Modales (100), Tooltips (50)
+- Animaciones con Framer Motion
+
+### Sistema de Navegación y Temas
+- Sidebar dinámico con configuración centralizada
+- Temas: dark/light/system con detección automática
+- Tooltips inteligentes con portal rendering
+- Responsive completo (desktop/móvil)
+
+## COMPONENTES PRINCIPALES
+### Dashboard
+- DashboardMain: Vista principal con estadísticas
+- ContainerCarousel: Carrusel de contenedores
+- ContainerImage: Imagen interactiva con zoom/pan ✅ CORREGIDO
+- ContainerNavigation: Navegación entre contenedores
+- DashboardStats: Estadísticas en tiempo real
+
+### Control Automático
+- ControlAutomaticoMain: Componente principal
+- FormularioUnico: Control simple con duración fija ✅ IMPLEMENTADO
+- FormularioCiclico: Control con etapas que se repiten ✅ IMPLEMENTADO
+- FormularioPeriodico: Control con etapas por tiempo total ✅ IMPLEMENTADO
+- ControlTablaActivos: Tabla de controles en proceso
+- ControlTablaHistorico: Tabla de procesos completados
+
+### UI Components
+- Toast: Sistema de notificaciones ✅ IMPLEMENTADO
+- ConfirmModal: Modal de confirmación ✅ IMPLEMENTADO
+- SaveModal: Modal de guardado ✅ IMPLEMENTADO
+- Tooltip: Tooltips con portal rendering
+
+### Layout
+- DashboardLayout: Layout principal con sidebar/header/footer
+- Sidebar: Navegación lateral con animaciones
+- LoginForm: Autenticación con validación
+
+## HOOKS PERSONALIZADOS
+- useAuth: Manejo de autenticación y sesión
+- useContainers: API de contenedores con auto-refresh
+- useControlAutomatico: API de control automático
+- useControlFormularios: Formularios de control ✅ IMPLEMENTADO
+- useModals: Manejo de modales ✅ IMPLEMENTADO
+- useToast: Sistema de notificaciones
+
+## CONTEXTOS IMPLEMENTADOS
+- ThemeContext: Manejo de temas (dark/light/system)
+- SidebarContext: Estado del sidebar (collapsed/mobile)
+- ToastContext: Sistema de notificaciones ✅ IMPLEMENTADO
+
+## TIPOS DE DATOS PRINCIPALES
+- UserData: Datos de usuario autenticado
+- Container: Datos de contenedores (60+ campos de telemetría)
+- ControlTemperatura: Datos de control automático
+- ControlUnico/Ciclico/Periodico: Formularios de control ✅ IMPLEMENTADO
+- ToastData: Datos de notificaciones
+- ConfirmData/SaveData: Datos de modales
+
+## PATRONES ESTABLECIDOS
+- page.tsx solo importa ComponentMain
+- ComponentMain maneja lógica y estado (máx 200 líneas)
+- SubComponents son presentacionales
+- Hooks personalizados para lógica de negocio
+- Validaciones con confirmaciones modales
+- Estados de loading/error/success consistentes
+- Memoización con useCallback y useMemo
+
+## PROBLEMAS RESUELTOS ✅
+### ContainerImage - Advertencias Next.js
+- ❌ Error: Image with fill and height value of 0
+- ❌ Error: Invalid position static, should be relative/absolute/fixed
+- ✅ Solución: Agregado min-h-[200px] y position relative al contenedor
+- ✅ Resultado: Sin advertencias, funcionalidad intacta
+
+### Sistema de Formularios
+- ✅ FormularioUnico: Validación completa, modal de confirmación
+- ✅ FormularioCiclico: Etapas dinámicas, validación de ciclos
+- ✅ FormularioPeriodico: Etapas periódicas, cálculo automático de ciclos
+- ✅ Validaciones: Campos requeridos, rangos válidos, fechas futuras
+- ✅ Estados: Loading, error, success con notificaciones
+
+### Sistema de Notificaciones
+- ✅ Toast system: 4 tipos (success, error, warning, info)
+- ✅ Auto-close configurable con progress bar
+- ✅ Pausa al hover, animaciones suaves
+- ✅ Z-index máximo para aparecer encima de todo
+
+## CONFIGURACIÓN DESARROLLO
+- pnpm dev (desarrollo con Turbopack)
+- pnpm build (producción)
+- pnpm lint (linting)
+- pnpm type-check (verificación TypeScript)
+
+## APIS Y ENDPOINTS
+### Implementados
+- POST /usuarios/extraerPass/{username} - Contraseña hasheada ✅
+- GET /usuarios/{username} - Datos usuario ✅
+- POST /Contenedor/listar - Lista contenedores ✅
+
+### Pendientes de Integración
+- POST /Control/listar - Lista controles (UI lista, falta integración)
+- POST /Control/crear - Crear control (formularios listos, falta endpoint)
+- POST /Control/actualizar - Actualizar control
+- POST /Control/eliminar - Eliminar control
+
+## SEGURIDAD IMPLEMENTADA
+- Contraseñas hasheadas con bcrypt
+- Datos encriptados en sessionStorage con claves aleatorias
+- Validación de entrada en formularios
+- Sanitización de datos antes de envío
+- Manejo seguro de tokens y sesiones
+
+## ESTADO ACTUAL DEL PROYECTO
+### Completamente Funcional ✅
+- ✅ Autenticación: Sistema completo con bcrypt
+- ✅ Dashboard: Monitoreo en tiempo real con imagen interactiva
+- ✅ Navegación: Sidebar dinámico con temas
+- ✅ Notificaciones: Toast system completo
+- ✅ Modales: Confirmación y guardado
+- ✅ Formularios Control: Único, Cíclico, Periódico con validaciones
+
+### Pendiente de Integración
+- 🔄 APIs de Control Automático: Formularios listos, falta conectar endpoints
+- 🔄 Middleware de autenticación: Protección automática de rutas
+- 🔄 Reorganización con route groups: (protected) y (auth)
+
+### Próximas Implementaciones
+- ⏳ Páginas: Manual Control, Cycle Control, Graph, Data
+- ⏳ Sistema de exportación (Excel/PDF)
+- ⏳ Tests unitarios
+- ⏳ PWA configuration
+
+## JERARQUÍA Z-INDEX ESTABLECIDA
+- Sidebar: z-40
+- Tooltips: z-50  
+- Modales: z-[100]
+- Toasts: z-[9999] (máximo nivel)
+
+## RESPONSIVE DESIGN
+- Mobile first approach
+- Breakpoints: sm(640px), md(768px), lg(1024px), xl(1280px)
+- Sidebar colapsable con overlay en móvil
+- Grid responsive con adaptación automática
+
+## PERFORMANCE Y OPTIMIZACIÓN
+- Lazy loading de componentes pesados
+- Code splitting automático por rutas
+- Memoización con useCallback/useMemo
+- Imágenes optimizadas con Next.js Image
+- Auto-refresh pausable en dashboard
+
+## PRÓXIMOS PASOS INMEDIATOS
+1. Integrar endpoints de Control Automático con formularios existentes
+2. Implementar middleware de autenticación
+3. Crear páginas Manual Control y Cycle Control
+4. Reorganizar estructura con route groups
+5. Implementar tests básicos para hooks principales
+
+## MÉTRICAS DE DESARROLLO
+- Archivos: Máximo 200 líneas cada uno ✅
+- Componentes: Un componente por archivo ✅
+- Imports: Alias \$/* configurado ✅
+- TypeScript: Tipado estricto en todo el proyecto ✅
+- Linting: ESLint con reglas Next.js ✅
+
+## ÚLTIMA ACTUALIZACIÓN
+- Fecha: JULIO 2025
+- Estado: Desarrollo activo
+- Milestone actual: Sistema de formularios completado
+- Próximo milestone: Integración completa con APIs de control
+- Desarrollador: Asistente especializado en Next.js/TypeScript
+
+## RESUMEN EJECUTIVO
+ZGROUP - LinkControl es una aplicación web moderna para monitoreo y control automático de contenedores refrigerados. Construida con Next.js 15 y TypeScript, implementa autenticación segura, dashboard en tiempo real, y sistema completo de control automático con formularios validados. 
+
+Estado actual: Core funcionalidades implementadas, pendiente integración final con APIs de control automático." > CONTEXTO_PROYECTO_ACTUALIZADO.txt
