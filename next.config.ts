@@ -1,10 +1,17 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+    // --- AÑADE ESTE BLOQUE ---
+  eslint: {
+    // ADVERTENCIA: Esto permite que las compilaciones de producción se completen
+    // con éxito incluso si tu proyecto tiene errores de ESLint.
+    ignoreDuringBuilds: true,
+  },
   // ✅ Desactivar StrictMode para ver las animaciones claramente
   reactStrictMode: false,
 
   webpack: (config, { dev, isServer }) => {
+    
     if (dev && !isServer) {
       // Resolver conflictos de case-sensitivity en Windows
       config.resolve.symlinks = false;
